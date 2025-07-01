@@ -35,7 +35,7 @@ def scrape_news_article(url):
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
 
-    article_div = soup.find('div', class_='clearfix')  # this class needs to be updated for every website based on html structure
+    article_div = soup.find('div', class_='article')  # this class needs to be updated for every website based on html structure
 
 
     if not article_div:
@@ -61,18 +61,18 @@ def scrape_news_article(url):
                 'vertical': vertical,
                 'source_url': url,
                 'date_scraped': date_scraped,
-                'source' : "eenadu"
+                'source' : "bbc telugu"
             })
 
     return pd.DataFrame(data)
 
-dirpath = r"/home/jellybun/Desktop/Telugu_Mixed_Quality_Web_Data/DevelopmentSpace/"
+dirpath = r"/home/jellybun/Desktop/Telugu_Mixed_Quality_Web_Data/DevelopmentSpace/data_collection/"
 os.chdir(dirpath)
 
 scraped_data = []
 
 if __name__ == "__main__":
-    url_list = "eenadu_urls.txt"
+    url_list = "bbc_telugu_urls.txt"
 
     with open(url_list) as source:
         urls = [line.strip() for line in source if line.strip()]
@@ -84,7 +84,7 @@ if __name__ == "__main__":
 
     if scraped_data:
         full_df = pd.concat(scraped_data, ignore_index=True)
-        full_df.to_csv("eenadu_scraped.csv", index=False, encoding='utf-8-sig')
+        full_df.to_csv("bbc_telugu_scraped.csv", index=False, encoding='utf-8-sig')
     else:
         print("No data scraped.")
 
